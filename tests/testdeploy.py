@@ -17,7 +17,7 @@ from configobj import ConfigObj
 
 from eth_utils.hexadecimal import encode_hex
 import json
-keyfile = "d:/blockchain/accounts/pyaccount.keystore"
+keyfile = "./bin/accounts/pyaccount.keystore"
 
 # 从keystore打开一个公私钥对
 with open(keyfile, "r") as dump_f:
@@ -38,12 +38,12 @@ with open(keyfile, "r") as dump_f:
     print("privkey: ", encode_hex(ac3.key))
 '''
 # 从abi文件获得abi的文本定义
-contractFile = r"sample\SimpleInfo.abi"
+contractFile = r"./contracts/SimpleInfo.abi"
 with open(contractFile, 'r') as load_f:
     contract_abi = json.load(load_f)
     load_f.close()
 # 将要调用的函数和参数编码
-with open(r"sample\SimpleInfo.bin", 'r') as load_f:
+with open(r"./contracts/SimpleInfo.bin", 'r') as load_f:
     functiondata = load_f.read()
     load_f.close()
 
@@ -74,7 +74,7 @@ print(signedTxResult)
 # signedTxResult.rawTransaction是二进制的，要放到rpc接口里要encode下
 print(encode_hex(signedTxResult.rawTransaction))
 
-url = "http://127.0.0.1:8545"
+url = "http://119.23.46.126:8545"
 rpc = utils.rpc.HTTPProvider(url)
 if True:
     param = [1, encode_hex(signedTxResult.rawTransaction)]

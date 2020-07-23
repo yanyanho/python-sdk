@@ -138,7 +138,10 @@ class TransactionCommon(bcosclient.BcosClient):
                 if '\'' in param:
                     param = param.replace('\'', "")
                 if "int" in input_item["type"] or "int256" in input_item["type"]:
+                    print("&&&&&&",input_item["type"])
                     paramformatted.append(int(param, 10))
+                   # paramformatted.append(param)
+
                     continue
                 if "address" in input_item["type"]:
                     try:

@@ -19,7 +19,7 @@ from utils.contracts import (
 from eth_abi import decode_single, decode_abi
 from eth_utils.hexadecimal import decode_hex, encode_hex
 import json
-keyfile = "d:/blockchain/accounts/pyaccount.keystore"
+keyfile = "bin/accounts/pyaccount.keystore"
 
 # 从keystore打开一个公私钥对
 with open(keyfile, "r") as dump_f:
@@ -39,7 +39,7 @@ with open(keyfile, "r") as dump_f:
     print("privkey: ", encode_hex(ac3.key))
 '''
 # 从abi文件获得abi的文本定义
-with open(r"sample\AddrTableWorker.abi", 'r') as load_f:
+with open(r"sample/AddrTableWorker.abi", 'r') as load_f:
     contract_abi = json.load(load_f)
 # 将要调用的函数和参数编码
 inputparams = ['abcefggg', 189, '0x7029c502b4F824d19Bd7921E9cb74Ef92392FB1b']
@@ -96,12 +96,12 @@ if True:
     # 发送
     response = rpc.make_request("call", param)
     print(response)
-    outputdata = response["result"]["output"]
+    # outputdata = response["result"]["output"]
     retabi = "(int256,uint256,address)"
 
-    print("data:", outputdata)
-    decoderesult = decode_single(retabi, decode_hex(outputdata))
-    print(decoderesult)
+    # print("data:", outputdata)
+    # decoderesult = decode_single(retabi, decode_hex(outputdata))
+    # print(decoderesult)
     from utils.contracts import get_function_info
     from utils.abi import *
 
@@ -115,8 +115,8 @@ if True:
     print("outputs:", outputs)
     fn_output_types = get_fn_abi_types_single(fn_abi, "outputs")
     print("output types str:", fn_output_types)
-    decoderesult = decode_single(fn_output_types, decode_hex(outputdata))
-    print(decoderesult)
+    # decoderesult = decode_single(fn_output_types, decode_hex(outputdata))
+    # print(decoderesult)
 
     fn_output_types = get_fn_abi_types(fn_abi, "outputs")
     decoderesult = decode_abi(fn_output_types, decode_hex(outputdata))

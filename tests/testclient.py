@@ -17,14 +17,14 @@ print(info)
 
 
 # 从文件加载abi定义
-contractFile = r"sample\SimpleInfo.abi"
+contractFile = r"./sample/SimpleInfo.abi"
 abi_parser = DatatypeParser()
 abi_parser.load_abi_file(contractFile)
 contract_abi = abi_parser.contract_abi
 
 # 部署合约
 print("\n>>Deploy:---------------------------------------------------------------------")
-with open(r"sample\SimpleInfo.bin", 'r') as load_f:
+with open(r"sample/SimpleInfo.bin", 'r') as load_f:
     contract_bin = load_f.read()
     load_f.close()
 result = client.deploy(contract_bin)
@@ -34,8 +34,7 @@ contract_name = contractname = os.path.splitext(os.path.basename(contractFile))[
 memo = "tx:" + result["transactionHash"]
 # 把部署结果存入文件备查
 ContractNote.save_address_to_contract_note(
-    contract_name, result["contractAddress"], int(
-        result["blockNumber"], 16), memo)
+    contract_name, result["contractAddress"])
 
 # 发送交易，调用一个改写数据的接口
 print("\n>>sendRawTransaction:----------------------------------------------------------")
@@ -79,7 +78,7 @@ int(num,16)  hex -> int
 hex(num)  : int -> hex
 '''
 
-doQueryTest = False
+doQueryTest = True
 if doQueryTest:
     print("\n>>---------------------------------------------------------------------")
     res = client.getNodeVersion()

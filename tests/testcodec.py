@@ -68,7 +68,7 @@ eventABI = '''{
 			},
 			{
 				"indexed": false,
-				"name": "city",
+				"name": "city",x
 				"type": "address"
 			},
 			{

@@ -1,4 +1,6 @@
 import time
+
+from contracts.HelloEvent import HelloEvent
 from event_callback import (format_event_register_request, register_event_callback)
 from client.bcosclient import BcosClient
 import os
@@ -34,11 +36,14 @@ class TestEventPushHandler(ChannelPushHandler):
 
 
 # 从文件加载abi定义
-abi_file = "contracts/HelloEvent.abi"
+abi_file = "´contracts/HelloEvent.abi"
 parser = data_parser = DatatypeParser(abi_file)
 contract_abi = data_parser.contract_abi
-contractnode = ContractNote()
-address = contractnode.get_last("HelloEvent")
+# contractnode = ContractNote()
+# address = contractnode.get_last("HelloEvent")
+si = HelloEvent("")
+result = si.deploy("contracts/HelloEvent.bin")
+address = result['contractAddress']
 print("event contract address is ", address)
 client = None
 client = BcosClient()
@@ -74,7 +79,8 @@ def test_register_event():
 
 
 def test_event():
-    receipt = client.rpc_sendRawTransactionGetReceipt(address, contract_abi, "set", params_set)
+    print("address", address)
+    receipt = client.rpc_sendRawTransactionGetReceipt("0x2b888761ceeb1de17ae4d5512bc38f1fe6111138", contract_abi, "set", params_set)
     print(json.dumps(receipt, indent=4))
     logresult = parser.parse_event_logs(receipt["logs"])
     i = 0
@@ -88,11 +94,11 @@ def test_event():
     assert 1 == 1
 
 
-topic = parser.topic_from_event_name("onset")
+topic = parser.topic_from_event_name("on_set")
 format_event_register_request("lastest", "lastest", address, [topic])
 #
-test_register_event()
-# test_event()
+# test_register_event()
+test_event()
 time.sleep(5)
 print("test done")
 client.finish()
